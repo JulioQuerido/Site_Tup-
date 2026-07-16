@@ -1,0 +1,6 @@
+Site Tupã/node_modules/
+Site Tupã/dist/
+Site Tupã/dist-ssr/
+*.log
+.DS_Store
+.gemini/
