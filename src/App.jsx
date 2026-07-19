@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PartnerCarousel from './components/PartnerCarousel';
@@ -529,6 +530,9 @@ function App() {
 
       {/* Footer */}
       <Footer scrollToSection={scrollToSection} />
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
 
       {/* Embedded fading effects */}
       <style>{`
