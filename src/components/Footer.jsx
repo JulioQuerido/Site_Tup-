@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Footer({ scrollToSection }) {
+export default function Footer() {
   return (
     <footer className="bg-[#0e0e0e] font-body-md text-label-sm full-width py-section-gap bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] border-t border-white/5 relative z-10">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-container-margin max-w-[1440px] mx-auto">
