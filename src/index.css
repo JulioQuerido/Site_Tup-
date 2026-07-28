@@ -184,3 +184,14 @@
   opacity: 1;
 }
 
+/* Custom classes for Festival do Japão Landing Page */
+.bg-seigaiha {
+  background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg');
+  background-repeat: repeat;
+  background-size: 50px 50px;
+  opacity: 0.8;
+}
+
+.bg-red-glow {
+  background-image: radial-gradient(circle at 60% 40%, rgba(230, 0, 18, 0.8) 0%, rgba(230, 0, 18, 0) 50%);
+}

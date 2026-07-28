@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { supabase } from '../supabaseClient';
-import { ADMIN_EMAIL } from '../constants/auth';
+import { isAdmin } from '../constants/auth';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -64,9 +64,9 @@ export default function AdminLogin() {
 
       // Checagem de conveniencia para dar mensagem clara ao usuario errado.
       // A autorizacao real e feita pelas policies de RLS no Supabase.
-      if (user?.email !== ADMIN_EMAIL) {
+      if (!isAdmin(user?.email)) {
         await supabase.auth.signOut();
-        setErrorMsg('Acesso negado. Apenas o usuário master está autorizado.');
+        setErrorMsg('Acesso negado. Você não possui privilégios de administrador.');
         shakeCard();
         return;
       }

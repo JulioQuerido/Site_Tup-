@@ -7,7 +7,7 @@ import AdminLayout from './components/AdminLayout';
 // recharts pesa ~250 kB e o grafico fica abaixo da dobra — carrega sob demanda.
 const AudienceChart = lazy(() => import('./components/AudienceChart'));
 import { supabase, isSupabaseConfigured } from './supabaseClient';
-import { ADMIN_EMAIL, isProtectedRoute, STANDALONE_ROUTES } from './constants/auth';
+import { isAdmin, isProtectedRoute, STANDALONE_ROUTES } from './constants/auth';
 
 // Paginas secundarias carregadas sob demanda para tirar recharts e as telas
 // de admin do bundle inicial.
@@ -18,6 +18,7 @@ const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const ChangePassword = lazy(() => import('./pages/ChangePassword'));
 const ChampionshipManager = lazy(() => import('./pages/ChampionshipManager'));
 const StaffCheckIn = lazy(() => import('./pages/StaffCheckIn'));
+const FestivalJapao = lazy(() => import('./pages/FestivalJapao'));
 
 const RouteFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -52,12 +53,44 @@ function App() {
     // dados esta nas policies de RLS do Supabase (supabase/schema.sql).
     const checkAuth = async () => {
       const { data: { session: currentSession } } = await supabase.auth.getSession();
-      if (currentSession?.user?.email !== ADMIN_EMAIL) {
+      if (!isAdmin(currentSession?.user?.email)) {
         window.location.hash = '#/login';
       }
     };
     checkAuth();
-  }, [currentRoute, session]);
+  }, [currentRoute]);
+
+  // SEO Deindexing & Secret Admin Shortcut
+  useEffect(() => {
+    // 1. Deindex sensitive pages
+    const sensitiveRoutes = ['#/login', '#/painel-metricas', '#/alterar-senha', '#/admin'];
+    const isSensitive = sensitiveRoutes.some(route => currentRoute.startsWith(route));
+    
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (isSensitive) {
+      if (!metaRobots) {
+        metaRobots = document.createElement('meta');
+        metaRobots.name = 'robots';
+        document.head.appendChild(metaRobots);
+      }
+      metaRobots.content = 'noindex, nofollow';
+    } else {
+      if (metaRobots) {
+        metaRobots.remove();
+      }
+    }
+
+    // 2. Secret Admin Shortcut (Ctrl + Shift + A)
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        window.location.hash = '#/login';
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentRoute]);
 
   const scrollToSection = (id) => {
     if (window.location.hash && window.location.hash !== '#/') {
@@ -142,6 +175,8 @@ function App() {
         return <AdminLayout currentRoute={currentRoute}><ChampionshipManager /></AdminLayout>;
       case '#/admin/checkin':
         return <AdminLayout currentRoute={currentRoute}><StaffCheckIn /></AdminLayout>;
+      case '#/festival-japao':
+        return <FestivalJapao />;
       default:
         return (
           <main className="flex-grow">

@@ -4,6 +4,21 @@
 export const ADMIN_EMAIL =
   import.meta.env.VITE_ADMIN_EMAIL || 'julioczquerido@gmail.com';
 
+// Suporta múltiplos e-mails separados por vírgula no .env
+const envEmails = import.meta.env.VITE_ADMIN_EMAILS
+  ? import.meta.env.VITE_ADMIN_EMAILS.split(',').map(e => e.trim().toLowerCase())
+  : [];
+
+export const ADMIN_EMAILS = [
+  ADMIN_EMAIL.toLowerCase(),
+  ...envEmails
+];
+
+export const isAdmin = (email) => {
+  if (!email) return false;
+  return ADMIN_EMAILS.includes(email.toLowerCase());
+};
+
 export const PROTECTED_ROUTES = [
   '#/painel-metricas',
   '#/admin/campeonatos',

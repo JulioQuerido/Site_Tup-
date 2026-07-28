@@ -65,11 +65,11 @@ Resumo das políticas:
 - `participantes_campeonato` — leitura pública (o chaveamento aparece no portal);
   escrita apenas para o admin.
 
-### 3. Usuário administrador
+### 3. Usuários administradores
 
-Crie o usuário pelo painel *Authentication → Users* do Supabase. O e-mail precisa
-bater com `VITE_ADMIN_EMAIL` e com o e-mail dentro da função `is_admin()` em
-`supabase/schema.sql`.
+1. **Criação do Usuário:** Crie o usuário pelo painel *Authentication → Users* do Supabase. O e-mail precisa constar na tabela de administradores do banco de dados e/ou nas variáveis de ambiente de administradores do frontend (`VITE_ADMIN_EMAIL`/`VITE_ADMIN_EMAILS`).
+2. **Senha do Primeiro Acesso:** Defina uma senha padrão temporária para o primeiro login (por exemplo, **`TupaHub2026!`**, configurada no `.env` como recomendação).
+3. **Fluxo de Alteração:** Ao realizar o primeiro login no sistema com a senha padrão temporária, o sistema detectará que o metadado `first_login` ainda não está definido como `false` e redirecionará o usuário automaticamente para a página de alteração de senha (`#/alterar-senha`) para cadastrar uma nova senha pessoal definitiva.
 
 ## Arquitetura
 

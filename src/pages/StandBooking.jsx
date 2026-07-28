@@ -373,7 +373,7 @@ export default function StandBooking() {
                   <span>Conectando Banco...</span>
                 ) : (
                   <>
-                    <span>Gerar QR Code</span>
+                    <span>Confirmar Agendamento</span>
                     <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>arrow_forward</span>
                   </>
                 )}
