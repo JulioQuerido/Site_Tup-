@@ -68,7 +68,7 @@ stable
 security definer
 set search_path = ''
 as $$
-  select coalesce(auth.jwt() ->> 'email', '') = 'julioczquerido@gmail.com';
+  select coalesce(auth.jwt() ->> 'email', '') = any(array['julioczquerido@gmail.com', 'lucasinfotec20@gmail.com']);
 $$;
 
 -- -----------------------------------------------------------------------------
