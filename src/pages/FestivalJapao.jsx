@@ -21,7 +21,7 @@ const FestivalJapao = () => {
           </div>
           
           {/* Festival Logo and Dates */}
-          <div className="md:w-1/2 flex flex-col items-center md:items-end gap-6 relative">
+          <div className="md:w-1/2 flex flex-col items-center md:items-end gap-6 relative md:translate-x-12 lg:translate-x-20">
             {/* The giant red sun behind the logo */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#e60012] rounded-full blur-2xl opacity-60 z-0"></div>
             <img 
